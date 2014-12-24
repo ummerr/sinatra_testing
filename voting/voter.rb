@@ -11,6 +11,11 @@ post '/cast' do
   erb :cast
 end
 
+get '/results' do
+  @votes = { 'HAM' => 7, 'CUR' => 5}
+  erb :results
+end
+
 Choices = {
   'HAM' => 'Hamburger',
   'PIZ' => 'Pizza',
