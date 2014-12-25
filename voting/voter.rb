@@ -30,4 +30,5 @@ Choices = {
   'PIZ' => 'Pizza',
   'CUR' => 'Curry',
   'NOO' => 'Noodles',
+  'BUT' => 'Butts',
 }

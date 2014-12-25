@@ -1,10 +1,12 @@
     <p>What's for dinner?</p>
     <form action='cast' method='post'>
+      <!-- the above defines what action the form takes/what happens next -->
       <ul class='unstyled'>
         <% Choices.each do |id, text| %>
           <li>
             <label class='radio'>
               <input type='radio' name='vote' value='<%= id %>' id='vote_<%= id %>' />
+<!--               the input type is named as vote here, which we pass to the post '/cast' route/controller -->
               <%= text %>
             </label>
           </li>

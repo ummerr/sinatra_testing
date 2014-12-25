@@ -1,2 +1,4 @@
 <p>You cast: <%= Choices[@vote] %></p>
+<!-- @vote is from the post '/cast' do block which stores @vote as a params['vote'] which was passed from the previous form
+@vote is then called in erb tags above to reference -->
 <p><a href="/results">See the results!</a></p>
