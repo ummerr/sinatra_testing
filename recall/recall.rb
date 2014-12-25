@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'data_mapper'
 
+
 SITE_TITLE = "Recall"
 SITE_DESCRIPTION = "'cause you're too busy to remember"
 
@@ -24,9 +25,9 @@ end
  #instructs DataMapper to automatically upgrade the database to contain the tables and fields set, and to do so again if any changes are made to the schema
 
 get '/' do
-  @notes = Note.all(:order => [:id.desc])
-  @title = 'All Notes'
-  erb :home
+    @notes = Note.all :order => :id.desc
+    @title = 'All Notes'
+    erb :home
 end
 
 post '/' do
