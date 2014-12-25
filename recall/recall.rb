@@ -1,6 +1,9 @@
 require 'sinatra'
 require 'data_mapper'
 
+SITE_TITLE = "Recall"
+SITE_DESCRIPTION = "'cause you're too busy to remember"
+
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db")
 
 class Note
@@ -12,7 +15,13 @@ class Note
   property :updated_at, DateTime
 end
 
-DataMapper.finalize.auto_upgrade! #instructs DataMapper to automatically upgrade the database to contain the tables and fields set, and to do so again if any changes are made to the schema
+DataMapper.finalize.auto_upgrade!
+
+helpers do
+  include Rack::Utils
+  alias_method :h, :escape_html
+end
+ #instructs DataMapper to automatically upgrade the database to contain the tables and fields set, and to do so again if any changes are made to the schema
 
 get '/' do
   @notes = Note.all(:order => [:id.desc])
@@ -28,6 +37,12 @@ post '/' do
   n.save
   redirect '/'
 end
+
+get '/rss.xml' do
+  @notes = Note.all :order => :id.desc
+  builder :rss
+end
+
 
 get '/:id' do
   @note = Note.get params[:id]
@@ -63,3 +78,5 @@ get '/:id/complete' do
   n.save
   redirect '/'
 end
+
+
