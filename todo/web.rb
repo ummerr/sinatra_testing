@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'data_mapper'
+require 'json'
 
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/todo_list.db")
   class Item
@@ -15,4 +16,23 @@ get '/' do
   @items = Item.all(:order => :created.desc)
   redirect '/new' if @items.empty?
   erb :index
+end
+
+get '/new' do
+  @title = "Add todo item"
+  erb :new
+end
+
+post '/new' do
+  Item.create(:content => params[:content], :created => Time.now)
+  redirect '/'
+end
+
+post '/done' do
+  item = Item.first(:id => params[:id])
+  item.done = !item.done
+  item.save
+  content_type 'application/json'
+  value = item.done ? 'done' : 'not done'
+  { :id => params[:id], :status => value }.to_json
 end
